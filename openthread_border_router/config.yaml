@@ -20,7 +20,7 @@ host_uts: true
 privileged:
   - IPC_LOCK
   - NET_ADMIN
-image: ghcr.io/fossoreslp/{arch}-addon-otbr
+image: ghcr.io/fossoreslp/ha-addons-custom/{arch}-addon-otbr
 init: false
 options:
   device: null
