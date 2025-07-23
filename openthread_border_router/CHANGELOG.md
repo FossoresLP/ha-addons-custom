@@ -1,8 +1,30 @@
 # Changelog
 
-## Unreleased
+## 2.13.0-thread1.4
 
-- Upgrade Thread to 1.4
+- Upgrade to Thread 1.4
+
+## 2.13.0
+- Bump to OTBR POSIX version b067e5ac (2025-01-13 22:32:22 -0500)
+- Bump universal-silabs-flasher to 0.0.28
+- Remove dataset deletion REST API backwards compatibility patch. The minimum Core version for this add-on is now 2023.9.0
+
+## 2.12.4
+
+- Fix OTBR addon does not start after updating containerd.io to 1.7.24-1
+
+## 2.12.3
+
+- Enable recovery mechanism from "radio tx timeout" errors
+- Increase the number of mesh header fragmentation tag entries to address
+  "Failed to get forwarded frame priority" notice messages in logs. Note that
+  these types of messages are non-critical (default priority will be applied in
+  that case).
+- Make some compile time configurations via project header file
+
+## 2.12.2
+
+- Update flasher script to work with Home Assistant Yellow with CM5
 
 ## 2.12.1
 - Fix possible race condition between otbr-agent-configure and otbr-agent-rest-discovery
