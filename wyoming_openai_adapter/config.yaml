@@ -26,7 +26,7 @@ options:
     models:
       - whisper-1
     streaming_models: []
-    backend: OPENAI
+    backend: OpenAIBackend.OPENAI
     temperature: null
     prompt: ""
   tts:
@@ -42,7 +42,7 @@ options:
       - onyx
       - nova
       - shimmer
-    backend: OPENAI
+    backend: OpenAIBackend.OPENAI
     speed: null
     instructions: ""
     streaming_models: []
@@ -62,7 +62,7 @@ schema:
     openai_url: url
     models: [str]
     streaming_models: [str]
-    backend: list(OPENAI|SPEACHES|LOCALAI|KOKORO_FASTAPI)?
+    backend: list(OpenAIBackend.OPENAI|OpenAIBackend.SPEACHES|OpenAIBackend.LOCALAI|OpenAIBackend.KOKORO_FASTAPI)?
     temperature: float(0,1)?
     prompt: str?
   tts:
@@ -71,7 +71,7 @@ schema:
     openai_url: url
     models: [str]
     voices: [str]
-    backend: list(OPENAI|SPEACHES|LOCALAI|KOKORO_FASTAPI)?
+    backend: list(OpenAIBackend.OPENAI|OpenAIBackend.SPEACHES|OpenAIBackend.LOCALAI|OpenAIBackend.KOKORO_FASTAPI)?
     speed: float(0.25,4.0)?
     instructions: str?
     streaming_models: [str]
