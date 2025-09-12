@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wyoming_openai_adapter"
+version = "0.3.7"
+description = "OpenAI-Compatible Proxy Middleware for the Wyoming Protocol - Home Assistant Addon"
+requires-python = ">=3.11"
+dependencies = [
+    "openai==1.107.0",
+    "wyoming==1.7.2",
+    "pysbd==0.3.4"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["wyoming_openai_adapter", "wyoming_openai_adapter.*"]

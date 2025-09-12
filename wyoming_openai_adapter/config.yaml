@@ -1,0 +1,82 @@
+---
+version: 0.3.7
+slug: wyoming_openai_adapter
+name: Wyoming OpenAI Adapter
+description: OpenAI-Compatible Proxy Middleware for the Wyoming Protocol
+url: https://github.com/roryeckel/wyoming-openai
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+homeassistant: 2023.9.0
+hassio_api: false
+discovery:
+  - wyoming
+host_network: false
+init: false
+options:
+  uri: tcp://0.0.0.0:10300
+  log_level: INFO
+  languages:
+    - en
+  stt:
+    enabled: false
+    openai_key: ""
+    openai_url: https://api.openai.com/v1
+    models:
+      - whisper-1
+    streaming_models: []
+    backend: OPENAI
+    temperature: null
+    prompt: ""
+  tts:
+    enabled: false
+    openai_key: ""
+    openai_url: https://api.openai.com/v1
+    models:
+      - tts-1
+    voices:
+      - alloy
+      - echo
+      - fable
+      - onyx
+      - nova
+      - shimmer
+    backend: OPENAI
+    speed: null
+    instructions: ""
+    streaming_models: []
+    streaming_min_words: null
+    streaming_max_chars: null
+ports:
+  10300/tcp: 10300
+ports_description:
+  10300/tcp: Wyoming server port
+schema:
+  uri: str
+  log_level: list(DEBUG|INFO|WARNING|ERROR|CRITICAL)
+  languages: [str]
+  stt:
+    enabled: bool
+    openai_key: password?
+    openai_url: url
+    models: [str]
+    streaming_models: [str]
+    backend: list(OPENAI|SPEACHES|LOCALAI|KOKORO_FASTAPI)?
+    temperature: float(0,1)?
+    prompt: str?
+  tts:
+    enabled: bool
+    openai_key: password?
+    openai_url: url
+    models: [str]
+    voices: [str]
+    backend: list(OPENAI|SPEACHES|LOCALAI|KOKORO_FASTAPI)?
+    speed: float(0.25,4.0)?
+    instructions: str?
+    streaming_models: [str]
+    streaming_min_words: int(1,)?
+    streaming_max_chars: int(1,)?
+startup: application
