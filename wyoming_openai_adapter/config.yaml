@@ -11,6 +11,7 @@ arch:
   - armv7
   - i386
 homeassistant: 2023.9.0
+image: ghcr.io/fossoreslp/ha-addons-custom/{arch}-addon-wyoming-openai-adapter
 hassio_api: false
 discovery:
   - wyoming
