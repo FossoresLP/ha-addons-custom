@@ -5,25 +5,16 @@ FROM $BUILD_FROM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN apk add --no-cache \
         wget \
         unzip \
         curl \
-        ca-certificates \
-        gnupg2 \
-        software-properties-common \
-        apt-transport-https \
-    && rm -rf /var/lib/apt/lists/*
+        ca-certificates
 
 # Install .NET 8 Runtime
-RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb \
-    && rm packages-microsoft-prod.deb \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        aspnetcore-runtime-8.0 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+        aspnetcore8-runtime \
+        icu-libs
 
 # Create app directory
 WORKDIR /opt/technitium
