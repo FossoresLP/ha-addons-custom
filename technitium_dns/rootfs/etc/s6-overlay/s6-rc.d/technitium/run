@@ -1,0 +1,105 @@
+#!/command/with-contenv bashio
+# ==============================================================================
+# Home Assistant Technitium DNS Server add-on
+# Runs the Technitium DNS Server
+# ==============================================================================
+
+bashio::log.info "Starting Technitium DNS Server..."
+
+# Get configuration
+WEB_PORT=$(bashio::config 'web_port')
+DNS_PORT=$(bashio::config 'dns_port')
+ADMIN_USER=$(bashio::config 'admin_user')
+ADMIN_PASSWORD=$(bashio::config 'admin_password')
+ENABLE_BLOCKING=$(bashio::config 'enable_blocking')
+ENABLE_LOGGING=$(bashio::config 'enable_logging')
+LOG_LEVEL=$(bashio::config 'log_level')
+PREFER_IPV6=$(bashio::config 'prefer_ipv6')
+
+# Create config directory if it doesn't exist
+mkdir -p /data/config
+mkdir -p /data/logs
+
+# Set working directory
+cd /opt/technitium
+
+# Set environment variables for Technitium DNS
+export ASPNETCORE_URLS="http://+:${WEB_PORT}"
+
+# Create or update DNS server configuration
+if [[ ! -f "/data/config/dns.config" ]]; then
+    bashio::log.info "Creating initial configuration..."
+    
+    # Start with basic configuration
+    cat > /data/config/dns.config << EOF
+{
+  "version": 1,
+  "dnsServerDomain": "technitium-dns.local",
+  "dnsServerLocalEndPoints": [
+    "0.0.0.0:${DNS_PORT}",
+    "[::]:${DNS_PORT}"
+  ],
+  "webServiceLocalAddresses": [
+    "0.0.0.0"
+  ],
+  "webServiceHttpPort": ${WEB_PORT},
+  "webServiceEnableTls": false,
+  "webServiceTlsPort": 53443,
+  "enableDnsOverHttp": false,
+  "enableDnsOverTls": false,
+  "enableDnsOverHttps": false,
+  "dnsOverHttpsPort": 443,
+  "dnsTlsCertificatePath": "",
+  "dnsTlsCertificatePassword": "",
+  "tsigKeys": [],
+  "recursion": "AllowOnlyForPrivateNetworks",
+  "recursionDeniedNetworks": [],
+  "recursionAllowedNetworks": [],
+  "randomizeName": false,
+  "qnameMinimization": true,
+  "nsRevalidation": true,
+  "resolverRetries": 2,
+  "resolverTimeout": 2000,
+  "clientTimeout": 4000,
+  "tcpSendTimeout": 10000,
+  "tcpReceiveTimeout": 10000,
+  "quicIdleTimeout": 60000,
+  "quicMaxInboundStreams": 100,
+  "listenBacklog": 100,
+  "webServiceUseSelfSignedTlsCertificate": false,
+  "blockListUrls": [],
+  "blockListUpdateIntervalHours": 24,
+  "blockListNextUpdatedOn": "0001-01-01T00:00:00",
+  "proxy": {
+    "type": "None"
+  },
+  "forwarders": [],
+  "forwarderProtocol": "Udp",
+  "enableBlocking": ${ENABLE_BLOCKING,,},
+  "allowTxtBlockingReport": true,
+  "blockingType": "NxDomain",
+  "customBlockingAddresses": [],
+  "blockListZoneRoot": "blocked.local",
+  "enableLogging": ${ENABLE_LOGGING,,},
+  "logQueries": true,
+  "useLocalTime": false,
+  "logFolder": "/data/logs",
+  "maxLogFileDays": 7,
+  "maxStatFileDays": 365,
+  "preferIPv6": ${PREFER_IPV6,,}
+}
+EOF
+fi
+
+# Update admin credentials if provided
+if [[ -n "${ADMIN_PASSWORD}" ]]; then
+    bashio::log.info "Setting up admin credentials..."
+    # This will be handled by the application on first run
+    export ADMIN_USER="${ADMIN_USER}"
+    export ADMIN_PASSWORD="${ADMIN_PASSWORD}"
+fi
+
+bashio::log.info "Starting Technitium DNS Server on port ${DNS_PORT} with web interface on port ${WEB_PORT}..."
+
+# Start Technitium DNS Server
+exec dotnet /opt/technitium/DnsServerApp.dll /data/config

@@ -1,0 +1,41 @@
+---
+version: 12.2.0
+slug: technitium_dns
+name: Technitium DNS Server
+description: An open source authoritative as well as recursive DNS server
+url: https://technitium.com/dns/
+arch:
+  - aarch64
+  - amd64
+homeassistant: 2023.9.0
+image: ghcr.io/fossoreslp/ha-addons-custom/{arch}-addon-technitium-dns
+hassio_api: false
+host_network: true
+init: false
+options:
+  web_port: 5380
+  dns_port: 53
+  admin_user: "admin"
+  admin_password: ""
+  enable_blocking: true
+  enable_logging: true
+  log_level: "Info"
+  prefer_ipv6: false
+ports:
+  53/tcp: 53
+  53/udp: 53
+  5380/tcp: 5380
+ports_description:
+  53/tcp: DNS server port (TCP)
+  53/udp: DNS server port (UDP)
+  5380/tcp: Web administration interface
+schema:
+  web_port: port
+  dns_port: port
+  admin_user: str
+  admin_password: password
+  enable_blocking: bool
+  enable_logging: bool
+  log_level: list(Trace|Debug|Info|Warning|Error|Critical)
+  prefer_ipv6: bool
+startup: services
