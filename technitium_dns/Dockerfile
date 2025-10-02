@@ -6,22 +6,22 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install dependencies
 RUN apk add --no-cache \
-        wget \
-        unzip \
-        curl \
-        ca-certificates
+    wget \
+    unzip \
+    curl \
+    ca-certificates
 
 # Install .NET 8 Runtime
 RUN apk add --no-cache \
-        aspnetcore8-runtime \
-        icu-libs \
-        libmsquic
+    aspnetcore8-runtime \
+    icu-libs \
+    libmsquic
 
 # Create app directory
 WORKDIR /opt/technitium
 
 # Download and extract Technitium DNS Server
-ARG TECHNITIUM_VERSION=12.2
+ARG TECHNITIUM_VERSION=13.6.0
 RUN wget "https://download.technitium.com/dns/archive/${TECHNITIUM_VERSION}/DnsServerPortable.tar.gz" \
     && tar -xzf DnsServerPortable.tar.gz \
     && rm DnsServerPortable.tar.gz \

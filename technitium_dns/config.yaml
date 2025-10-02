@@ -21,6 +21,8 @@ options:
   enable_logging: true
   log_level: "Info"
   prefer_ipv6: false
+  forwarders: ""
+  forwarder_protocol: "Udp"
 ports:
   53/tcp: 53
   53/udp: 53
@@ -38,4 +40,6 @@ schema:
   enable_logging: bool
   log_level: list(Trace|Debug|Info|Warning|Error|Critical)
   prefer_ipv6: bool
+  forwarders: str
+  forwarder_protocol: list(Udp|Tcp|Tls|Https|HttpsJson)
 startup: services
