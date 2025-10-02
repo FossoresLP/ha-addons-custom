@@ -14,7 +14,8 @@ RUN apk add --no-cache \
 # Install .NET 8 Runtime
 RUN apk add --no-cache \
         aspnetcore8-runtime \
-        icu-libs
+        icu-libs \
+        libmsquic
 
 # Create app directory
 WORKDIR /opt/technitium
