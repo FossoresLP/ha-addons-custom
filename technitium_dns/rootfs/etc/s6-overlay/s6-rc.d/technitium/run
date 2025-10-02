@@ -29,7 +29,7 @@ export ASPNETCORE_URLS="http://+:${WEB_PORT}"
 # Create or update DNS server configuration
 if [[ ! -f "/data/config/dns.config" ]]; then
     bashio::log.info "Creating initial configuration..."
-    
+
     # Start with basic configuration
     cat > /data/config/dns.config << EOF
 {
