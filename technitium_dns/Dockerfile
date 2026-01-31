@@ -13,7 +13,7 @@ RUN apk add --no-cache \
 
 # Install .NET 8 Runtime
 RUN apk add --no-cache \
-    aspnetcore8-runtime \
+    aspnetcore9-runtime \
     icu-libs \
     libmsquic
 
@@ -21,7 +21,7 @@ RUN apk add --no-cache \
 WORKDIR /opt/technitium
 
 # Download and extract Technitium DNS Server
-ARG TECHNITIUM_VERSION=13.6.0
+ARG TECHNITIUM_VERSION=14.3.0
 RUN wget "https://download.technitium.com/dns/archive/${TECHNITIUM_VERSION}/DnsServerPortable.tar.gz" \
     && tar -xzf DnsServerPortable.tar.gz \
     && rm DnsServerPortable.tar.gz \
